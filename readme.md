@@ -9,6 +9,8 @@ Welcome to DC Chat github page
   + Need better UI!!!!!!!!
   + Should have multiple chat rooms by RESTful URI
   + There seems like Naming guest aren't sometimes correct.
+  + Add file transfer (Issued by Ana)
+  + give link to URI
 
 ### Known bugs
   + There seems like Naming guest aren't sometimes correct.
