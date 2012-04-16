@@ -8,5 +8,5 @@ Welcome to DC Chat github page
   + [YongWoo Noh][dragon]
   + [Jihun Cho][jhc]
 
-[dragon]: github.com/rnfn6292 "github"
-[jhc]: github.com/creamsoup "github"
+[dragon]: http://github.com/rnfn6292 "github"
+[jhc]: http://github.com/creamsoup "github"
