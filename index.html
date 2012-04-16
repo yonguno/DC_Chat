@@ -1,93 +1,117 @@
 <html>
-<head>
-<title>DC Chat</title>
-<script src="/socket.io/socket.io.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script>
-	var socket = io.connect('http://ec2-23-20-205-81.compute-1.amazonaws.com:2020');
-	socket.on('news',function(data){
-		sanitizedMsg = data.msg.replace(/</g,'&lt;').replace(/>/g,'&gt;');
-		$("#msg").append(sanitizedMsg+"<br />");
-		$("#msg").prop({scrollTop: $("#msg").prop("scrollHeight")});
-	});
-	socket.on('name',function(data){
-		$("#name").attr("value", data.name);
-	});
-	socket.on('users',function(data){
-		$("#users").html(data.users);
-	});
-	$(document).ready(function(){
-	$("#entry").keydown(function(e){
-	  if(e.keyCode==27) {
-      var re = new RegExp(/(\/t)\s([^\s]+)\s$/);
-			if(re.test($("#entry").attr("value").replace("\n",''))) {
-			  $("#entry").attr("value",'');
-			}
-    }
- });
- $("#entry").keypress(function(e){
-		if(e.keyCode!=13) return;
-		var message = $("#entry").attr("value").replace("\n","");
-		if(message.length==0) return;
-		socket.emit('msg',{msg:message});
-		var re = new RegExp(/(\/t)\s([^\s]+)\s(.*)$/);
-		if(re.test(message)) {
-		  var tell = re.exec(message);
-		  $("#entry").attr("value", tell[1]+' '+tell[2]+' ');
-		}else{
-		  var re = new RegExp(/(\/t)\s([^\s]+)/);
-			if(!re.test(message.replace(/\s+$/,''))) {
-			  $("#entry").attr("value",'');  
-			}
-		}
-	});
-	$("#name").keypress(function(e){
-		if(e.keyCode!=13) return;
-		var username = $("#name").attr("value").replace(/\s/g,'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-		socket.emit('name',{name:username});
-	});
-	$("#users").click(function(e) {
-	  var getID = e.target.innerHTML;
-		if(getID[0] == '<') return;
-		$("#entry").attr("value","/t " + getID + ' ');
-		$("#entry").focus();
-	});
-	});
-</script>
-<style>
-#ui{
-	position:absolute;
-	top:2em;
-}
-#msg{
-	width:500px;
-	height:500px;
-	border: 1px solid #000;
-	overflow:auto;
-}
-#users{
-	position:absolute;
-	top:0em;
-	left:520px;
-	width:100px;
-	height:500px;
-	float:right;
-	border:1px solid #000;
-	overflow:auto;
-}
-#users div:hover{
-  color:blue;
-}
-</style>
-</head>
-<body>
-welcome to DC Chat ver 0.3<br/>
-<div id="ui">
-<div id="msg"></div>
-<div id="users"></div>
-<div id="send">
-<input type="text" id="name">
-<input tabindex="1" type="text" id="entry" size="77"></div>
-</div>
-</body>
+  <head>
+    <title>DC Chat</title>
+
+    <script src='/socket.io/socket.io.js'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <script type="text/javascript">
+      var socket = io.connect('http://localhost:2020');
+    
+      socket.on('news',function(data) {
+        sanitizedMsg = data.msg.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        
+        $("#msg").append(sanitizedMsg+'<br />');
+        $("#msg").prop({scrollTop: $("#msg").prop('scrollHeight')});
+      });
+
+      socket.on('name',function(data) {
+        $("#name").attr('value', data.name);
+      });
+    
+      socket.on('users',function(data) {
+        $("#users").html(data.users);
+      });
+    
+      $(document).ready(function() {
+        $("#entry").keydown(function(e) {
+          if(e.keyCode==27) {
+            var re = new RegExp(/(\/t)\s([^\s]+)\s$/);
+            
+            if(re.test($("#entry").attr('value').replace("\n",''))) {
+              $("#entry").attr('value','');
+            }
+          }
+        });
+
+        $("#entry").keypress(function(e) {
+          if(e.keyCode!=13) return;
+      
+          var message = $("#entry").attr('value').replace("\n",'');
+          
+          if(message.length==0) return;
+          socket.emit('msg',{msg:message});
+          
+          var re = new RegExp(/(\/t)\s([^\s]+)\s(.*)$/);
+      
+          if(re.test(message)) {
+            var tell = re.exec(message);
+            
+            $("#entry").attr('value', tell[1]+' '+tell[2]+' ');
+          }else{
+            var re = new RegExp(/(\/t)\s([^\s]+)/);
+            
+            if(!re.test(message.replace(/\s+$/,''))) {
+              $("#entry").attr('value','');  
+            }
+          }
+        });
+    
+        $("#name").keypress(function(e){
+          if(e.keyCode!=13) return;
+          
+          var username = $("#name").attr('value').replace(/\s/g,'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          socket.emit('name',{name:username});
+        });
+  
+        $("#users").click(function(e) {
+          var getID = e.target.innerHTML;
+          if(getID[0] == '<') return;
+          
+          $("#entry").attr('value','/t ' + getID + ' ');
+          $("#entry").focus();
+        });
+      });
+    </script>
+
+    <style type="text/css">
+      #ui{
+        position:absolute;
+        top:2em;
+      }
+  
+      #msg{
+        width:500px;
+        height:500px;
+        border: 1px solid #000;
+        overflow:auto;
+      }
+
+      #users{
+        position:absolute;
+        top:0em;
+        left:520px;
+        width:100px;
+        height:500px;
+        float:right;
+        border:1px solid #000;
+        overflow:auto;
+      }
+  
+      #users div:hover{
+        color:blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p>welcome to DC Chat ver 0.3</p>
+    <div id='ui'>
+      <div id='msg'></div>
+      <div id='users'></div>
+        <div id='send'>
+          <input type='text' id='name'>
+          <input tabindex='1' type='text' id='entry' size='77'>
+        </div>
+      </div>
+  </body>
 </html>
