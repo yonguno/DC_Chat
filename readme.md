@@ -20,7 +20,7 @@ Welcome to DC Chat github page
 ### Contributors:
   + [YongWoo Noh][dragon]
   + [Jihun Cho][jhc]
-  + [HeeMin Yoo - QA][hmy]
+  + [HeeMin Yoo - ~~QA~~ Having Fun][hmy]
 
 [dragon]: http://github.com/rnfn6292 "github"
 [jhc]: http://github.com/creamsoup "github"
